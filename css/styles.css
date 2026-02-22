@@ -1,3 +1,8 @@
+/* default shows back, flip shows front */
+.front-face { transform: rotateY(180deg); }
+.back-face  { transform: rotateY(0deg); }
+.memory-card.flip { transform: rotateY(180deg); }
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -82,6 +87,7 @@ header {
 
 /* -----------------------------
    FIXED FLIP CARD CSS (UPDATED)
+   Back visible first, character on click
    ----------------------------- */
 
 .card-container {
@@ -106,12 +112,11 @@ header {
     width: 100%;
     height: 100%;
 
-    /* key changes */
     transform-style: preserve-3d; /* keep 3D always */
     transition: transform 400ms cubic-bezier(.645, .045, .355, 1); /* don't transition "all" */
 }
 
-/* Hover: put scaling on container so it doesn't override flip transform */
+/* Hover: shadow on card, scale on container so it doesn't override flip transform */
 .memory-card:hover {
     box-shadow: 0 22px 30px -12px rgba(0, 0, 0, .4);
 }
@@ -147,7 +152,7 @@ header {
     border-radius: 10px;
 }
 
-/* Back of card (default visible before flip) */
+/* Back of card (DEFAULT VISIBLE) */
 .back-face {
     background-color: #fefef2;
     background-image: url('../img/We_Bare_Bears_wordmark.png');
@@ -156,11 +161,11 @@ header {
     background-repeat: no-repeat;
     box-shadow: inset 2px 2px 0 0 #fff, inset 0 0 0 8px #c3d8c642;
 
-    /* critical: makes it show after flip */
-    transform: rotateY(180deg);
+    /* default shows back */
+    transform: rotateY(0deg);
 }
 
-/* Front of card (character side; visible after flip) */
+/* Front of card (CHARACTER SIDE; visible AFTER FLIP) */
 .front-face {
     display: flex;
     justify-content: center;
@@ -171,6 +176,9 @@ header {
     background-position: 0px 0px;
     background-size: 70%;
     box-shadow: 0 2px 1px 1px rgba(159, 76, 76, .11);
+
+    /* hide until flip */
+    transform: rotateY(180deg);
 }
 
 /* --------------------------------
@@ -570,7 +578,7 @@ img#music-off-icon {
 .overlay.credit {
     display: none;
     background-color: rgba(0, 0, 0, 0.65);
-    z-index: 10000, /* NOTE: leaving as-is from your original (comma is invalid CSS) */
+    z-index: 10000; /* fixed: removed invalid comma */
 }
 
 .credit-wrapper {
@@ -951,6 +959,8 @@ img#music-off-icon {
 
 }
 
+/* NOTE: left your original media query name intact ("sceen") to avoid changing behavior.
+   If you want this to work on real devices, change "sceen" -> "screen". */
 @media only sceen and (max-width: 320px) and (max-width: 480px) {
 
     .menu-wrapper {
